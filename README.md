@@ -38,6 +38,13 @@ $ flyctl launch --name APP_NAME --copy-config --no-deploy
 The above will create the application, give it a random name, reuse the existing
 `fly.toml` configuration, but it will not automatically deploy it.
 
+## Allocate IPs
+
+```console
+$ flyctl ips allocate-v4 --shared
+$ flyctl ips allocate-v6
+```
+
 ## Load the secrets
 
 ```console
