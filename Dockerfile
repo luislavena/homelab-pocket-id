@@ -1,93 +1,10 @@
 # syntax=registry.docker.com/docker/dockerfile:1
 
-# stage 0: download zip package of PocketID specific commit
-# stage 1: build front-end (Vite/Svelte) artifacts
-# stage 2: build back-end (Go) packed with front-end artifacts
-# stage 3: copy artifacts and configuration into the final image
-
-# ---
-# stage 0: download zip package of PocketID specific commit
-
 ARG ALPINE_VERSION=3.21.3
-FROM registry.docker.com/library/alpine:${ALPINE_VERSION} AS stage0
-
-# download tools to help with the build process
-RUN --mount=type=cache,target=/var/cache/apk \
-    set -eux; \
-    apk add \
-        curl \
-        zip \
-    ;
-
-# https://github.com/pocket-id/pocket-id/archive/COMMIT.zip
-RUN set -eux -o pipefail; \
-    cd /tmp; \
-    export \
-        POCKET_ID_COMMIT=553147a1c0a2271950c4344b629d7f7dbdb78961 \
-        POCKET_ID_SHA256=7a46f3f8bc6688deca75df20a7c9a60e1d0f14ec864aeaeeeb42a86bd36cacf9 \
-    ; \
-    { \
-        curl --fail -Lo pocket-id.zip https://github.com/pocket-id/pocket-id/archive/${POCKET_ID_COMMIT}.zip; \
-        echo "${POCKET_ID_SHA256} pocket-id.zip" | sha256sum -c - >/dev/null 2>&1; \
-        unzip -q pocket-id.zip; \
-        mv pocket-id-${POCKET_ID_COMMIT} /pocket-id; \
-        rm pocket-id.zip; \
-    }
-
-# ---
-# stage 1: build front-end (Vite/Svelte) artifacts
-
-FROM registry.docker.com/library/node:22-alpine AS stage1
-WORKDIR /build
-
-# install dependencies
-COPY --from=stage0 /pocket-id/frontend/package*.json /build/
-RUN npm ci
-
-# copy source code
-COPY --from=stage0 /pocket-id/frontend /build/
-
-# build artifacts
-RUN set -eux -o pipefail; \
-    export BUILD_OUTPUT_PATH=dist; \
-    npm run build
-
-# ---
-# stage 2: build back-end (Go) packed with front-end artifacts
-
-FROM registry.docker.com/library/golang:1.24-alpine AS stage2
-WORKDIR /build
-
-COPY --from=stage0 /pocket-id/backend/go.mod /pocket-id/backend/go.sum /build/
-RUN go mod download
-
-# copy source code, front-end artifacts and version information
-COPY --from=stage0 /pocket-id/backend /build/
-COPY --from=stage1 /build/dist /build/frontend/dist/
-COPY --from=stage0 /pocket-id/.version /build/
-
-# build application
-RUN set -eux -o pipefail; \
-    export \
-    VERSION=$(cat /build/.version) \
-    CGO_ENABLED=0 \
-    GOOS=linux \
-    ; \
-    go build \
-        -ldflags="-X github.com/pocket-id/pocket-id/backend/internal/common.Version=${VERSION} -buildid=${VERSION}" \
-        -trimpath \
-        -o pocket-id \
-        ./cmd/main.go \
-    ;
-
-# ---
-# stage 3: copy artifacts and configuration into the final image
-
-FROM registry.docker.com/library/alpine:${ALPINE_VERSION} AS stage3
+FROM registry.docker.com/library/alpine:${ALPINE_VERSION}
 
 # install litestream
-RUN --mount=type=cache,target=/var/cache/apk \
-    --mount=type=tmpfs,target=/tmp \
+RUN --mount=type=tmpfs,target=/tmp \
     set -eux; \
     cd /tmp; \
     { \
@@ -116,10 +33,35 @@ RUN --mount=type=cache,target=/var/cache/apk \
     [ "$(command -v litestream)" = '/usr/local/bin/litestream' ]; \
     litestream version
 
+# install pocket-id binary
+RUN --mount=type=tmpfs,target=/tmp \
+    set -eux; \
+    mkdir -p /app; \
+    cd /tmp; \
+    { \
+        export POCKETID_VERSION=1.0.0; \
+        case "$(arch)" in \
+        x86_64) \
+            export \
+                POCKETID_ARCH=amd64 \
+                POCKETID_SHA256=af372c13b5cde7ab091c9a9eededf9556ef89c0322a1fcdfbbd295894e5a4a14 \
+            ; \
+            ;; \
+        aarch64) \
+            export \
+                POCKETID_ARCH=arm64 \
+                POCKETID_SHA256=8700b79fc573ea59f97dd25060f8868ee5c3968a40343ddf83b15f3645556a1e \
+            ; \
+            ;; \
+        esac; \
+        wget -q -O pocket-id https://github.com/pocket-id/pocket-id/releases/download/v${POCKETID_VERSION}/pocket-id-linux-${POCKETID_ARCH}; \
+        echo "${POCKETID_SHA256} *pocket-id" | sha256sum -c - >/dev/null 2>&1; \
+        chmod +x pocket-id; \
+        mv pocket-id /app/; \
+    }
+
 COPY ./container/litestream.yml /etc/
 COPY ./container/entrypoint.sh /
-
-COPY --from=stage2 /build/pocket-id /app/
 
 EXPOSE 1411
 VOLUME [ "/app/data" ]
