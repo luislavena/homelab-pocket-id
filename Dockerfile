@@ -23,8 +23,8 @@ RUN --mount=type=cache,target=/var/cache/apk \
 RUN set -eux -o pipefail; \
     cd /tmp; \
     export \
-        POCKET_ID_COMMIT=44b595d10ff4365befbf08b93701c6156b3d10c3 \
-        POCKET_ID_SHA256=6447529dc27a6703d5983981c36ebcdd9f799052ab8c8a36207d789f81030781 \
+        POCKET_ID_COMMIT=553147a1c0a2271950c4344b629d7f7dbdb78961 \
+        POCKET_ID_SHA256=7a46f3f8bc6688deca75df20a7c9a60e1d0f14ec864aeaeeeb42a86bd36cacf9 \
     ; \
     { \
         curl --fail -Lo pocket-id.zip https://github.com/pocket-id/pocket-id/archive/${POCKET_ID_COMMIT}.zip; \
