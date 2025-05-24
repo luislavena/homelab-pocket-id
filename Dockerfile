@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+# syntax=registry.docker.com/docker/dockerfile:1
 
 # stage 0: download zip package of PocketID specific commit
 # stage 1: build front-end (Vite/Svelte) artifacts
@@ -9,7 +9,7 @@
 # stage 0: download zip package of PocketID specific commit
 
 ARG ALPINE_VERSION=3.21.3
-FROM alpine:${ALPINE_VERSION} AS stage0
+FROM registry.docker.com/library/alpine:${ALPINE_VERSION} AS stage0
 
 # download tools to help with the build process
 RUN --mount=type=cache,target=/var/cache/apk \
@@ -37,7 +37,7 @@ RUN set -eux -o pipefail; \
 # ---
 # stage 1: build front-end (Vite/Svelte) artifacts
 
-FROM node:22-alpine AS stage1
+FROM registry.docker.com/library/node:22-alpine AS stage1
 WORKDIR /build
 
 # install dependencies
@@ -55,7 +55,7 @@ RUN set -eux -o pipefail; \
 # ---
 # stage 2: build back-end (Go) packed with front-end artifacts
 
-FROM golang:1.24-alpine AS stage2
+FROM registry.docker.com/library/golang:1.24-alpine AS stage2
 WORKDIR /build
 
 COPY --from=stage0 /pocket-id/backend/go.mod /pocket-id/backend/go.sum /build/
