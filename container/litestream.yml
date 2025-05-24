@@ -4,7 +4,7 @@ dbs:
     replicas:
       - name: replica1
         type: s3
-        bucket: ${REPLICA1_BUCKET_NAME}
+        bucket: ${REPLICA1_BUCKET}
         path: ${APP_NAME}
         endpoint: ${REPLICA1_ENDPOINT}
         region: ${REPLICA1_REGION}
@@ -12,7 +12,7 @@ dbs:
         secret-access-key: ${REPLICA1_SECRET_ACCESS_KEY}
       - name: replica2
         type: s3
-        bucket: ${REPLICA2_BUCKET_NAME}
+        bucket: ${REPLICA2_BUCKET}
         path: ${APP_NAME}
         endpoint: ${REPLICA2_ENDPOINT}
         region: ${REPLICA2_REGION}
