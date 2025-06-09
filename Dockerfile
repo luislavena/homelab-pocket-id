@@ -39,18 +39,18 @@ RUN --mount=type=tmpfs,target=/tmp \
     mkdir -p /app; \
     cd /tmp; \
     { \
-        export POCKETID_VERSION=1.0.0; \
+        export POCKETID_VERSION=1.2.0; \
         case "$(arch)" in \
         x86_64) \
             export \
                 POCKETID_ARCH=amd64 \
-                POCKETID_SHA256=af372c13b5cde7ab091c9a9eededf9556ef89c0322a1fcdfbbd295894e5a4a14 \
+                POCKETID_SHA256=f1b66e1a4a9eee059c5a771e9b2815b4b09ebefbca246a6c8269ad1dc5532727 \
             ; \
             ;; \
         aarch64) \
             export \
                 POCKETID_ARCH=arm64 \
-                POCKETID_SHA256=8700b79fc573ea59f97dd25060f8868ee5c3968a40343ddf83b15f3645556a1e \
+                POCKETID_SHA256=da30d7ca7a3116d93436aa3e903d0ac5eed0f4be8847365f73424581c0daf0c0 \
             ; \
             ;; \
         esac; \
