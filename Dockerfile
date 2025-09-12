@@ -3,7 +3,16 @@
 ARG ALPINE_VERSION=3.22.1
 FROM registry.docker.com/library/alpine:${ALPINE_VERSION}
 
-# install litestream
+# ---
+# system tools
+RUN --mount=type=cache,target=/var/cache/apk \
+    set -eux; \
+    apk add \
+        su-exec \
+    ;
+
+# ---
+# litestream
 RUN --mount=type=tmpfs,target=/tmp \
     set -eux; \
     cd /tmp; \
@@ -33,7 +42,8 @@ RUN --mount=type=tmpfs,target=/tmp \
     [ "$(command -v litestream)" = '/usr/local/bin/litestream' ]; \
     litestream version
 
-# install pocket-id binary
+# ---
+# pocket-id
 RUN --mount=type=tmpfs,target=/tmp \
     set -eux; \
     mkdir -p /app; \
