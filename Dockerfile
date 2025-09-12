@@ -4,12 +4,21 @@ ARG ALPINE_VERSION=3.22.1
 FROM registry.docker.com/library/alpine:${ALPINE_VERSION}
 
 # ---
-# system tools
+# system tools & non-root user (1000)
 RUN --mount=type=cache,target=/var/cache/apk \
     set -eux; \
-    apk add \
-        su-exec \
-    ;
+    { \
+        apk add \
+            su-exec \
+        ; \
+    }; \
+    # non-root user and group
+    { \
+        addgroup -g 1000 pocket-id; \
+        adduser -u 1000 -G pocket-id -h /app -s /bin/sh -D pocket-id; \
+        # cleanup backup copies
+        rm /etc/group- /etc/passwd- /etc/shadow-; \
+    }
 
 # ---
 # litestream
@@ -79,6 +88,7 @@ ENV \
     APP_ENV=production \
     KEYS_STORAGE=database \
     DB_CONNECTION_STRING=/app/data/pocket-id.db \
+    UPLOAD_PATH=/app/data/uploads \
     ANALYTICS_DISABLED=true
 
 EXPOSE 1411
