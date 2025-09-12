@@ -2,14 +2,31 @@
 services:
   pocketid:
     build:
-      context: .
+      context: ..
     depends_on:
       replica1:
         condition: service_healthy
       replica2:
         condition: service_healthy
-    env_file:
-      - replicas.env
+    environment:
+      - APP_URL=https://pocketid.local
+      # Replica 1
+      - REPLICA1_BUCKET=mybackup
+      - REPLICA1_ENDPOINT=http://replica1:9000
+      - REPLICA1_REGION=auto
+      - REPLICA1_ACCESS_KEY_ID=keyid
+      - REPLICA1_SECRET_ACCESS_KEY=secretkey
+      # Replica 2
+      - REPLICA2_BUCKET=mybackup
+      - REPLICA2_ENDPOINT=http://replica2:9000
+      - REPLICA2_REGION=auto
+      - REPLICA2_ACCESS_KEY_ID=keyid
+      - REPLICA2_SECRET_ACCESS_KEY=secretkey
+    labels:
+      # Ref: https://docs.orbstack.dev/docker/domains#custom
+      - dev.orbstack.domains=pocketid.local
+      # Ref: https://docs.orbstack.dev/docker/domains#ports
+      - dev.orbstack.http-port=1411
     ports:
       - "1411:1411"
     volumes:
