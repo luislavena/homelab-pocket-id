@@ -68,8 +68,9 @@ COPY ./container/entrypoint.sh /
 ENV \
     APP_ENV=production \
     KEYS_STORAGE=database \
+    DB_CONNECTION_STRING=/app/data/pocket-id.db \
     ANALYTICS_DISABLED=true
 
 EXPOSE 1411
-VOLUME [ "/app/data" ]
 ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/app/pocket-id", "/app/data/pocket-id.db"]
