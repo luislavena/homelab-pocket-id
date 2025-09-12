@@ -1,5 +1,5 @@
 ---
-name: pocketid
+name: example
 
 services:
   pocketid:
@@ -11,7 +11,14 @@ services:
       replica2:
         condition: service_healthy
     environment:
-      - APP_URL=https://pocketid.local
+      # Ref: https://pocket-id.org/docs/configuration/environment-variables
+      - APP_URL=https://id.example.local
+      - ENCRYPTION_KEY=some-random-bytes
+      # FIXME: Disable UI config does not correctly set APP_NAME (appName)
+      # - UI_CONFIG_DISABLED=true
+      # - APP_NAME="SSO"
+      # - EMAILS_VERIFIED=true
+      # - ALLOW_OWN_ACCOUNT_EDIT=false
       # Replica 1
       - REPLICA1_BUCKET=mybackup
       - REPLICA1_ENDPOINT=http://replica1:9000
@@ -32,7 +39,7 @@ services:
       start_period: 10s
     labels:
       # Ref: https://docs.orbstack.dev/docker/domains#custom
-      - dev.orbstack.domains=pocketid.local
+      - dev.orbstack.domains=id.example.local
       # Ref: https://docs.orbstack.dev/docker/domains#ports
       - dev.orbstack.http-port=1411
     ports:
