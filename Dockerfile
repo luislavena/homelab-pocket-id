@@ -39,18 +39,18 @@ RUN --mount=type=tmpfs,target=/tmp \
     mkdir -p /app; \
     cd /tmp; \
     { \
-        export POCKETID_VERSION=1.3.1; \
+        export POCKETID_VERSION=1.10.0; \
         case "$(arch)" in \
         x86_64) \
             export \
                 POCKETID_ARCH=amd64 \
-                POCKETID_SHA256=eb245e1819de7f600f614f2d470e416a0ecc8a30cd69c0959fa14590d9e11819 \
+                POCKETID_SHA256=be00ac2358042294d80078ad19cb98528f9eefa6202fe35930f5ff81afd4293d \
             ; \
             ;; \
         aarch64) \
             export \
                 POCKETID_ARCH=arm64 \
-                POCKETID_SHA256=fa81b1976a917426fb672ce57fea6974823eab150b00e6f1462e3d33f58c6677 \
+                POCKETID_SHA256=bc3aed53c123721f8c493337c50024f0dba16ac5a66acaa9cbd7bb022d84f79a \
             ; \
             ;; \
         esac; \
@@ -62,6 +62,12 @@ RUN --mount=type=tmpfs,target=/tmp \
 
 COPY ./container/litestream.yml /etc/
 COPY ./container/entrypoint.sh /
+
+# adjust default configuration
+# Ref: https://pocket-id.org/docs/configuration/environment-variables
+ENV \
+    KEYS_STORAGE=database \
+    ANALYTICS_DISABLED=true
 
 EXPOSE 1411
 VOLUME [ "/app/data" ]
