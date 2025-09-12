@@ -47,8 +47,8 @@ jobs:
 
       - name: Create or update tip tag
         run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git tag -f -a tip -m "Latest continuous build" ${GITHUB_SHA}
           git push origin --force tip
 
