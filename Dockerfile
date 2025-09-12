@@ -66,6 +66,7 @@ COPY ./container/entrypoint.sh /
 # adjust default configuration
 # Ref: https://pocket-id.org/docs/configuration/environment-variables
 ENV \
+    APP_ENV=production \
     KEYS_STORAGE=database \
     ANALYTICS_DISABLED=true
 
