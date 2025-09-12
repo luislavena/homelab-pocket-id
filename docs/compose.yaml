@@ -1,4 +1,6 @@
 ---
+name: pocketid
+
 services:
   pocketid:
     build:
@@ -22,6 +24,12 @@ services:
       - REPLICA2_REGION=auto
       - REPLICA2_ACCESS_KEY_ID=keyid
       - REPLICA2_SECRET_ACCESS_KEY=secretkey
+    healthcheck:
+      test: ["CMD", "/app/pocket-id", "healthcheck"]
+      interval: 1m30s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
     labels:
       # Ref: https://docs.orbstack.dev/docker/domains#custom
       - dev.orbstack.domains=pocketid.local
