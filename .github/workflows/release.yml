@@ -77,12 +77,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate release notes
+      - name: Get release notes
         id: notes
-        uses: miniscruff/changie-action@v2
-        with:
-          version: latest
-          args: latest --template='{{- range .Changes}}{{.Body}}{{ end }}'
+        run: |
+          echo "contents=$(cat .changes/${{ needs.setup.outputs.version-tag }}.md)" >> "$GITHUB_OUTPUT"
 
       - name: Create git tag
         run: |
@@ -97,7 +95,7 @@ jobs:
           tag_name: ${{ needs.setup.outputs.version-tag }}
           name: ${{ needs.setup.outputs.version }}
           body: |
-            ${{ steps.notes.outputs.output }}
+            ${{ steps.notes.outputs.contents }}
 
             Container image:
             - `ghcr.io/${{ github.repository }}:${{ needs.setup.outputs.version-tag }}`
