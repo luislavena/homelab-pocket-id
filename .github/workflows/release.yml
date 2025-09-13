@@ -17,8 +17,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.version.outputs.version }}
-      version-tag: v${{ steps.version.outputs.version }}
+      version-tag: ${{ steps.version.outputs.version-tag }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,7 +31,7 @@ jobs:
 
       - name: Setup version output
         id: version
-        run: echo "version=${{ steps.changie.outputs.output }}" >> "$GITHUB_OUTPUT"
+        run: echo "version-tag=${{ steps.changie.outputs.output }}" >> "$GITHUB_OUTPUT"
 
   build-container:
     runs-on: ubuntu-latest
@@ -93,7 +92,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.setup.outputs.version-tag }}
-          name: ${{ needs.setup.outputs.version }}
+          name: ${{ needs.setup.outputs.version-tag }}
           body: |
             ${{ steps.notes.outputs.contents }}
 

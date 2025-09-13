@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "CHANGELOG.md"
 
 # We must only run one release workflow at a time to prevent corrupting
 # our release artifacts.
