@@ -43,7 +43,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/luislavena/homelab-pocketid:tip
+            ghcr.io/${{ github.repository }}:tip
 
       - name: Create or update tip tag
         run: |
@@ -64,6 +64,6 @@ jobs:
             Commit: `${{ github.sha }}`
 
             Container image:
-            - `ghcr.io/luislavena/homelab-pocketid:tip`
+            - `ghcr.io/${{ github.repository }}:tip`
           prerelease: true
           draft: false
