@@ -8,14 +8,19 @@ kindFormat: "### {{.Kind}}"
 changeFormat: "- {{.Body}}"
 kinds:
   - label: Added
+    key: added
     auto: minor
   - label: Changed
+    key: changed
     auto: minor
   - label: Fixed
+    key: fixed
     auto: patch
   - label: Security
+    key: security
     auto: patch
   - label: Internal
+    key: internal
     auto: patch
 
 newlines:
