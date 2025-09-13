@@ -76,10 +76,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get release notes
-        id: notes
+      - name: Build release notes
         run: |
-          echo "contents=$(cat .changes/${{ needs.setup.outputs.version-tag }}.md)" >> "$GITHUB_OUTPUT"
+          cat .changes/${{ needs.setup.outputs.version-tag }}.md > combined_notes.md
+          echo '' >> combined_notes.md
+          echo 'Container image:' >> combined_notes.md
+          echo '- `ghcr.io/${{ github.repository }}:${{ needs.setup.outputs.version-tag }}`' >> combined_notes.md
+          echo '- `ghcr.io/${{ github.repository }}:latest`' >> combined_notes.md
 
       - name: Create git tag
         run: |
@@ -93,11 +96,6 @@ jobs:
         with:
           tag_name: ${{ needs.setup.outputs.version-tag }}
           name: ${{ needs.setup.outputs.version-tag }}
-          body: |
-            ${{ steps.notes.outputs.contents }}
-
-            Container image:
-            - `ghcr.io/${{ github.repository }}:${{ needs.setup.outputs.version-tag }}`
-            - `ghcr.io/${{ github.repository }}:latest`
+          body_path: combined_notes.md
           draft: false
           prerelease: false
