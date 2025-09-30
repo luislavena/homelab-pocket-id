@@ -89,7 +89,8 @@ ENV \
     KEYS_STORAGE=database \
     DB_CONNECTION_STRING=/app/data/pocket-id.db \
     UPLOAD_PATH=/app/data/uploads \
-    ANALYTICS_DISABLED=true
+    ANALYTICS_DISABLED=true \
+    LOG_LEVEL=warn
 
 EXPOSE 1411
 ENTRYPOINT ["/entrypoint.sh"]
