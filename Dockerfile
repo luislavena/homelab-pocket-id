@@ -58,18 +58,18 @@ RUN --mount=type=tmpfs,target=/tmp \
     mkdir -p /app; \
     cd /tmp; \
     { \
-        export POCKETID_VERSION=1.10.0; \
+        export POCKETID_VERSION=1.11.2; \
         case "$(arch)" in \
         x86_64) \
             export \
                 POCKETID_ARCH=amd64 \
-                POCKETID_SHA256=be00ac2358042294d80078ad19cb98528f9eefa6202fe35930f5ff81afd4293d \
+                POCKETID_SHA256=e314a86342e4d5a5397b48ad49f96939e20ac0f4f2f91473bffa95307dc95a66 \
             ; \
             ;; \
         aarch64) \
             export \
                 POCKETID_ARCH=arm64 \
-                POCKETID_SHA256=bc3aed53c123721f8c493337c50024f0dba16ac5a66acaa9cbd7bb022d84f79a \
+                POCKETID_SHA256=baffe36ec494d46a12bf73268aa17df0f639d0cf76d6065cfbf67ba504430fd3 \
             ; \
             ;; \
         esac; \
@@ -89,7 +89,8 @@ ENV \
     KEYS_STORAGE=database \
     DB_CONNECTION_STRING=/app/data/pocket-id.db \
     UPLOAD_PATH=/app/data/uploads \
-    ANALYTICS_DISABLED=true
+    ANALYTICS_DISABLED=true \
+    LOG_LEVEL=warn
 
 EXPOSE 1411
 ENTRYPOINT ["/entrypoint.sh"]
