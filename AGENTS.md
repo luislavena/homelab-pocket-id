@@ -107,6 +107,16 @@ Verify changes by:
 1. Running `make build` successfully (Dockerfile syntax, checksums, smoke tests)
 2. Testing locally with `docs/compose.yaml` when changes affect runtime behavior
 
+## Pull request conventions
+
+PR titles should be short and descriptive. PR descriptions should focus on the
+user-facing "why" using concise bullet points rather than restating
+implementation details. Avoid repeating file names, checksums, or env var
+names that are already visible in the diff.
+
+Extract this information from the session context or ask the user if it cannot
+be extrapolated from it.
+
 ## Changelog workflow
 
 Uses [changie](https://changie.dev/). Every PR requires a changelog entry
