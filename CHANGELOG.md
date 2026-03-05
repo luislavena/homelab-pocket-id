@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.4.0 - 2026-03-05
+
+### Added
+
+- Add DISABLE_REPLICATION option to skip Litestream replication
+
+### Changed
+
+- Upgrade Alpine Linux from 3.22.1 to 3.23.3
+- Upgrade Pocket ID from 1.12.0 to 2.3.0
+- Use database for file storage instead of filesystem
+
+### Internal
+
+- Add AI agent guidelines for repository contribution
+- Document pull request conventions in AGENTS.md
+
 ## v0.3.0 - 2025-10-04
 
 ### Changed
