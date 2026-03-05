@@ -1,6 +1,6 @@
 # syntax=registry.docker.com/docker/dockerfile:1
 
-ARG ALPINE_VERSION=3.22.1
+ARG ALPINE_VERSION=3.23.3
 FROM registry.docker.com/library/alpine:${ALPINE_VERSION}
 
 # ---
@@ -58,18 +58,18 @@ RUN --mount=type=tmpfs,target=/tmp \
     mkdir -p /app; \
     cd /tmp; \
     { \
-        export POCKETID_VERSION=1.12.0; \
+        export POCKETID_VERSION=2.3.0; \
         case "$(arch)" in \
         x86_64) \
             export \
                 POCKETID_ARCH=amd64 \
-                POCKETID_SHA256=20b492f482cdfab1c771975be7f70837390bfa0fa8c610ebffcedf10d79122a6 \
+                POCKETID_SHA256=cbcf4811add30b2b5999ad9e75bdf4bba6e994d4861b080d1536aaf3a7c51a5a \
             ; \
             ;; \
         aarch64) \
             export \
                 POCKETID_ARCH=arm64 \
-                POCKETID_SHA256=d223029460be4bdc0a39fbd8564b22c0de60067615649fefb16f37e2c85a8f4e \
+                POCKETID_SHA256=3a03cfeec3fea8ba229ebc96d8151937c6c63d54b4e5aa89a6257d4546182894 \
             ; \
             ;; \
         esac; \
@@ -86,9 +86,8 @@ COPY ./container/entrypoint.sh /
 # Ref: https://pocket-id.org/docs/configuration/environment-variables
 ENV \
     APP_ENV=production \
-    KEYS_STORAGE=database \
+    FILE_BACKEND=database \
     DB_CONNECTION_STRING=/app/data/pocket-id.db \
-    UPLOAD_PATH=/app/data/uploads \
     ANALYTICS_DISABLED=true \
     LOG_LEVEL=warn
 
