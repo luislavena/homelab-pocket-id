@@ -14,6 +14,8 @@ services:
       # Ref: https://pocket-id.org/docs/configuration/environment-variables
       - APP_URL=https://id.example.local
       - ENCRYPTION_KEY=some-random-bytes
+      # Set to any value to disable Litestream replication
+      # - DISABLE_REPLICATION=true
       # FIXME: Disable UI config does not correctly set APP_NAME (appName)
       # - UI_CONFIG_DISABLED=true
       # - APP_NAME="SSO"
