@@ -86,8 +86,8 @@ COPY ./container/entrypoint.sh /
 # Ref: https://pocket-id.org/docs/configuration/environment-variables
 ENV \
     APP_ENV=production \
+    FILE_BACKEND=database \
     DB_CONNECTION_STRING=/app/data/pocket-id.db \
-    UPLOAD_PATH=/app/data/uploads \
     ANALYTICS_DISABLED=true \
     LOG_LEVEL=warn
 
