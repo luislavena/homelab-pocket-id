@@ -1,7 +1,7 @@
 VERSION ?= latest
 
 DOCKERFILE := Dockerfile
-IMAGE_NAME := ghcr.io/luislavena/homelab-pocketid
+IMAGE_NAME := ghcr.io/luislavena/homelab-pocket-id
 
 .PHONY: build
 build: $(DOCKERFILE)
