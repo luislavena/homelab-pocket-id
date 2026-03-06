@@ -135,6 +135,14 @@ Run `changie new --help` for all options.
 
 - **check-changelog**: fails PRs missing entries in
   `.changes/unreleased/*.yaml` or unmodified `CHANGELOG.md`
+- **create-release-pr**: manually triggered; batches unreleased changie
+  entries, updates `CHANGELOG.md` and `VERSION`, and opens a release PR.
+  Trigger it with:
+
+  ```
+  gh workflow run create-release-pr.yml
+  ```
+
 - **release**: on `main` when `CHANGELOG.md` changes; builds multi-arch image
   and creates GitHub release
 - **release-tip**: on `main` when `CHANGELOG.md` unchanged; builds `tip`
