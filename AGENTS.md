@@ -96,7 +96,7 @@ and smoke tests pass.
 make build
 ```
 
-Builds image tagged `ghcr.io/luislavena/homelab-pocketid:latest`.
+Builds image tagged `ghcr.io/luislavena/homelab-pocket-id:latest`.
 Use `make build VERSION=vX.Y.Z` for a specific tag. No tests beyond
 Dockerfile's built-in smoke tests and SHA256 verification.
 
