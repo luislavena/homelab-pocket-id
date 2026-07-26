@@ -62,12 +62,12 @@ services:
       timeout: 10s
       retries: 3
     volumes:
-      - replica1:/bitnamilegacy/minio/data
+      - replica1:/bitnami/minio/data
 
   replica2:
     <<: *replica
     volumes:
-      - replica2:/bitnamilegacy/minio/data
+      - replica2:/bitnami/minio/data
 
 volumes:
   pocketid:
