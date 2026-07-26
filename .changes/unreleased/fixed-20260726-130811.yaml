@@ -1,3 +1,0 @@
-kind: fixed
-body: Upgrade to Litestream 0.3.14, fixing a panic during database restore
-time: 2026-07-26T13:08:11.668818-03:00
