@@ -1,6 +1,6 @@
 # syntax=registry.docker.com/docker/dockerfile:1
 
-ARG ALPINE_VERSION=3.23.3
+ARG ALPINE_VERSION=3.24.1
 FROM registry.docker.com/library/alpine:${ALPINE_VERSION}
 
 # ---
@@ -26,18 +26,18 @@ RUN --mount=type=tmpfs,target=/tmp \
     set -eux; \
     cd /tmp; \
     { \
-        export LITESTREAM_VERSION=0.3.13; \
+        export LITESTREAM_VERSION=0.3.14; \
         case "$(arch)" in \
         x86_64) \
             export \
                 LITESTREAM_ARCH=amd64 \
-                LITESTREAM_SHA256=eb75a3de5cab03875cdae9f5f539e6aedadd66607003d9b1e7a9077948818ba0 \
+                LITESTREAM_SHA256=880ccafc9514650c4a2a0cc78eb1e61aaad95dd3e86e877c8694f955c9095436 \
             ; \
             ;; \
         aarch64) \
             export \
                 LITESTREAM_ARCH=arm64 \
-                LITESTREAM_SHA256=9585f5a508516bd66af2b2376bab4de256a5ef8e2b73ec760559e679628f2d59 \
+                LITESTREAM_SHA256=4d375a66653e4a9b27a5b38ce9cb73681c39893ba0485f81ab860d4cd427e642 \
             ; \
             ;; \
         esac; \
@@ -58,22 +58,22 @@ RUN --mount=type=tmpfs,target=/tmp \
     mkdir -p /app; \
     cd /tmp; \
     { \
-        export POCKETID_VERSION=2.3.0; \
+        export POCKETID_VERSION=2.11.0; \
         case "$(arch)" in \
         x86_64) \
             export \
                 POCKETID_ARCH=amd64 \
-                POCKETID_SHA256=cbcf4811add30b2b5999ad9e75bdf4bba6e994d4861b080d1536aaf3a7c51a5a \
+                POCKETID_SHA256=ae15e3c71770bf59cae4935d328692bbb6a336008e149f648a965644d0300b7f \
             ; \
             ;; \
         aarch64) \
             export \
                 POCKETID_ARCH=arm64 \
-                POCKETID_SHA256=3a03cfeec3fea8ba229ebc96d8151937c6c63d54b4e5aa89a6257d4546182894 \
+                POCKETID_SHA256=cff9fb5f2f8887d1aae33614b5e7af8624ad7b8573b1bcecdeb1ea3d6b77d04e \
             ; \
             ;; \
         esac; \
-        wget -q -O pocket-id https://github.com/pocket-id/pocket-id/releases/download/v${POCKETID_VERSION}/pocket-id-linux-${POCKETID_ARCH}; \
+        wget -q -O pocket-id https://github.com/pocket-id/pocket-id/releases/download/v${POCKETID_VERSION}/pocket-id_linux_${POCKETID_ARCH}; \
         echo "${POCKETID_SHA256} *pocket-id" | sha256sum -c - >/dev/null 2>&1; \
         chmod +x pocket-id; \
         mv pocket-id /app/; \

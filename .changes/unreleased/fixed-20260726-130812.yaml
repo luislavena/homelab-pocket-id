@@ -1,0 +1,3 @@
+kind: fixed
+body: Take Litestream snapshots hourly to shorten database restores
+time: 2026-07-26T13:08:12.880497-03:00
