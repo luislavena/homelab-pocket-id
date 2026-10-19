@@ -1,6 +1,6 @@
 # syntax=registry.docker.com/docker/dockerfile:1
 
-ARG ALPINE_VERSION=3.24.1
+ARG ALPINE_VERSION=3.24.2
 FROM registry.docker.com/library/alpine:${ALPINE_VERSION}
 
 # ---
