@@ -16,9 +16,8 @@ services:
       - ENCRYPTION_KEY=some-random-bytes
       # Set to any value to disable Litestream replication
       # - DISABLE_REPLICATION=true
-      # FIXME: Disable UI config does not correctly set APP_NAME (appName)
       # - UI_CONFIG_DISABLED=true
-      # - APP_NAME="SSO"
+      # - APP_NAME=SSO
       # - EMAILS_VERIFIED=true
       # - ALLOW_OWN_ACCOUNT_EDIT=false
       # Replica 1

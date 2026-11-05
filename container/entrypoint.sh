@@ -17,7 +17,7 @@ fi
 APP_PATH=$(dirname ${APP})
 DB_PATH=$(dirname ${DB_FILE})
 
-export APP_NAME=$(basename ${APP})
+export REPLICA_PATH=$(basename ${APP})
 export DB_FILE
 
 # ensure running from APP_PATH
